@@ -1,0 +1,276 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Outfit', sans-serif;
+  background: #050510;
+  color: white;
+}
+
+/* --- ETHEREAL SPACE BACKGROUND --- */
+.space-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, #1a1638 0%, #080512 60%, #030108 100%);
+  animation: glowPulse 10s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes glowPulse {
+  0% { transform: scale(1); filter: brightness(1) hue-rotate(0deg); }
+  100% { transform: scale(1.05); filter: brightness(1.2) hue-rotate(15deg); }
+}
+
+/* Simple CSS Stars */
+.space-bg::after, .space-bg::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 200%; height: 200%;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 140px 70px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 160px 120px, rgba(200,200,255,0.9), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 250px 250px;
+  animation: drift 100s linear infinite;
+  opacity: 0.5;
+}
+.space-bg::before {
+  background-size: 400px 400px;
+  animation: drift 150s linear infinite;
+  opacity: 0.3;
+  transform: rotate(25deg);
+}
+
+@keyframes drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-30%); }
+}
+
+/* --- ENVIRONMENT LAYOUT --- */
+.environment {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 150px; /* Expansive space floating between them */
+}
+
+/* Base floating items behavior */
+.floating-item {
+  will-change: transform;
+}
+
+/* Left Zone */
+.floating-zone {
+  position: relative;
+  width: 300px;
+  height: 400px;
+}
+
+#float-polaroid {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translateY(-50%);
+  z-index: 5;
+  pointer-events: none; /* Let clicks strictly hit the vinyl */
+}
+
+.polaroid-sleeve {
+  width: 220px;
+  border: 12px solid #f9f9f9;
+  border-bottom: 45px solid #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 35px rgba(120, 80, 255, 0.25);
+  transform: rotate(-8deg);
+}
+
+#float-record {
+  position: absolute;
+  top: 50%;
+  left: 55%; /* Displaced strongly to the right */
+  transform: translateY(-65%); /* Displaced slightly up */
+  z-index: 2; /* Sits naturally behind the polaroid */
+}
+
+.record-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  cursor: grab;
+  /* Cosmic purple glow beneath the record */
+  box-shadow: 0 0 50px rgba(184, 150, 255, 0.4); 
+  border-radius: 50%;
+}
+
+.record-container:active {
+  cursor: grabbing;
+}
+
+.vinyl {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  clip-path: circle(48% at 50% 50%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+  pointer-events: none; 
+}
+
+/* --- TURNTABLE ZONE --- */
+.turntable-zone {
+  position: relative;
+  width: 600px;
+  height: 500px;
+  z-index: 8;
+  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8));
+}
+
+.turntable {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Glow pad to let the multiply blended turntable show up */
+.turntable::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 350px;
+  background: radial-gradient(circle, rgba(230, 210, 255, 0.45) 0%, rgba(20,20,30,0) 70%);
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(25px);
+}
+
+.base {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply; /* Will multiply against the light glow pad */
+  pointer-events: none;
+}
+
+.platter {
+  position: absolute;
+  top: 48%; 
+  left: 42%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+
+/* Tonearm */
+.arm {
+  position: absolute;
+  top: 10%;
+  right: -30px;
+  width: 320px;
+  height: auto;
+  mix-blend-mode: multiply;
+  transform-origin: 30% 20%; 
+  transform: rotate(-45deg); 
+  z-index: 20;
+  pointer-events: none; /* Tonearm moves magically via GSAP now */
+  transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1); 
+  filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
+}
+
+.arm.playing {
+  transform: rotate(-5deg); /* Over the record automatically */
+}
+
+/* Animations */
+.spin {
+  animation: rotateVinyl 3.5s linear infinite;
+}
+
+@keyframes rotateVinyl {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* --- HIDDEN OVERLAY --- */
+.letter-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(4, 2, 8, 0.85);
+  backdrop-filter: blur(15px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 3s ease-in-out;
+}
+
+.letter-overlay.reveal {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.letter-content {
+  color: #fff;
+  padding: 60px 80px 40px;
+  max-width: 650px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(circle, rgba(40, 20, 80, 0.3) 0%, rgba(0,0,0,0) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  box-shadow: 0 0 100px rgba(120, 80, 255, 0.15);
+  transform: translateY(30px); /* Pre-float start state */
+}
+
+.polaroid-large {
+  width: 240px;
+  border: 12px solid #fff;
+  border-bottom: 50px solid #fff;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  margin-bottom: 40px;
+  transform: rotate(3deg);
+}
+
+.letter-content h1 {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  margin-bottom: 25px;
+  font-size: 3.2rem;
+  color: #e5d4ff;
+  text-shadow: 0 0 25px rgba(200, 150, 255, 0.6);
+  letter-spacing: 2px;
+}
+
+.letter-content p {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #d1c4e9;
+}

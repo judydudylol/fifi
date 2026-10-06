@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capital Punishment – Exam 1 Practice Quiz | C104</title>
+  <meta name="description" content="A 40-question university-level practice quiz covering Indiana death penalty statute, deterrence, retribution, IAC, and related topics for C104 Exam 1." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#0b0f1a;--bg2:#111827;--bg3:#1a2236;--border:rgba(255,255,255,0.07);
+      --gold:#c9a84c;--gold-light:#f0c96e;--blue:#3b82f6;--blue-dark:#1d4ed8;
+      --green:#10b981;--red:#ef4444;--amber:#f59e0b;--text:#e2e8f0;--muted:#94a3b8;
+      --radius:14px;--radius-sm:8px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;z-index:0;
+      background:radial-gradient(ellipse 80% 60% at 20% -10%,rgba(59,130,246,.12) 0%,transparent 60%),
+                 radial-gradient(ellipse 60% 50% at 80% 110%,rgba(201,168,76,.08) 0%,transparent 55%);
+      pointer-events:none}
+    #app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 20px 80px}
+
+    /* STICKY BAR */
+    .sticky-bar{position:sticky;top:0;z-index:100;background:rgba(11,15,26,.85);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:14px;
+      font-size:13px;color:var(--muted)}
+    .sticky-bar .sb-fill{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden}
+    .sticky-bar .sb-fill-inner{height:100%;border-radius:999px;
+      background:linear-gradient(90deg,var(--blue),var(--gold));transition:width .3s}
+    .sticky-bar strong{color:var(--text)}
+
+    /* HERO */
+    .hero{text-align:center;padding:48px 0 36px}
+    .hero-badge{display:inline-block;background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));
+      border:1px solid rgba(201,168,76,.35);color:var(--gold);font-size:11px;font-weight:600;
+      letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:999px;margin-bottom:20px}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,46px);font-weight:700;line-height:1.15;
+      margin-bottom:14px;background:linear-gradient(135deg,#f0f4ff 0%,var(--gold-light) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{color:var(--muted);font-size:15px;max-width:540px;margin:0 auto 28px;line-height:1.6}
+    .hero-stats{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:36px}
+    .stat-pill{background:var(--bg3);border:1px solid var(--border);border-radius:999px;
+      padding:8px 18px;font-size:13px;color:var(--muted)}
+    .stat-pill span{color:var(--gold);font-weight:600}
+
+    /* SECTION HEADER */
+    .section-header{display:flex;align-items:center;gap:14px;margin:40px 0 20px}
+    .section-header .label{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+      color:var(--gold-light);white-space:nowrap}
+    .section-header .line{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,168,76,.4),transparent)}
+    .section-tag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+      color:var(--muted);padding:4px 10px;border:1px solid var(--border);border-radius:6px}
+
+    /* QUESTION CARD */
+    .q-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+      padding:28px 28px 22px;margin-bottom:16px;transition:border-color .2s,box-shadow .2s;
+      animation:fadeInUp .4s ease both}
+    .q-card:hover{border-color:rgba(255,255,255,.13);box-shadow:0 4px 24px rgba(0,0,0,.3)}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    .q-meta{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .q-num{font-size:12px;font-weight:700;color:var(--gold);background:rgba(201,168,76,.1);
+      border:1px solid rgba(201,168,76,.25);border-radius:6px;padding:3px 10px;letter-spacing:.5px}
+    .q-type{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+      padding:3px 9px;border-radius:6px}
+    .type-mc{background:rgba(59,130,246,.12);color:#60a5fa;border:1px solid rgba(59,130,246,.2)}
+    .type-tf{background:rgba(16,185,129,.1);color:#34d399;border:1px solid rgba(16,185,129,.2)}
+    .type-app{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.2)}
+
+    .q-text{font-size:16px;font-weight:500;line-height:1.6;color:var(--text);margin-bottom:18px}
+    .q-scenario{background:rgba(245,158,11,.06);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;
+      padding:12px 16px;margin-bottom:14px;font-size:14px;color:#cbd5e1;font-style:italic;line-height:1.6}
+
+    /* OPTIONS */
+    .options{display:flex;flex-direction:column;gap:9px}
+    .option{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-radius:var(--radius-sm);
+      border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);cursor:pointer;
+      transition:background .15s,border-color .15s,transform .1s;font-size:14.5px;line-height:1.5;
+      color:var(--text);user-select:none}
+    .option:hover{background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.25);transform:translateX(2px)}
+    .option.selected{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.45)}
+    .option-letter{flex-shrink:0;width:26px;height:26px;border-radius:6px;background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:700;color:var(--muted);transition:background .15s,color .15s}
+    .option.selected .option-letter{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+    /* TF */
+    .tf-options{display:flex;gap:12px;flex-wrap:wrap}
+    .tf-btn{flex:1;min-width:100px;padding:13px 20px;border-radius:var(--radius-sm);
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:var(--text);
+      font-size:15px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;
+      font-family:'Outfit',sans-serif}
+    .tf-btn:hover{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3)}
+    .tf-btn.selected{background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.5);color:#60a5fa}
+
+    /* SUBMIT */
+    .submit-zone{margin:40px 0 20px;text-align:center}
+    .progress-bar-wrap{background:rgba(255,255,255,.05);border-radius:999px;height:6px;overflow:hidden;margin-bottom:20px}
+    .progress-bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--gold));transition:width .3s ease}
+    .progress-text{font-size:13px;color:var(--muted);margin-bottom:20px}
+    .progress-text strong{color:var(--text)}
+    .btn-submit{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);
+      color:#fff;border:none;border-radius:999px;padding:16px 44px;font-size:16px;font-weight:700;
+      cursor:pointer;letter-spacing:.3px;box-shadow:0 4px 24px rgba(59,130,246,.35);
+      transition:transform .15s,box-shadow .15s;font-family:'Outfit',sans-serif}
+    .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(59,130,246,.45)}
+
+    /* ANSWER SHEET */
+    .answer-sheet{display:none;background:var(--bg2);border:1px solid var(--border);
+      border-radius:var(--radius);padding:32px 28px;margin:20px 0}
+    .answer-sheet.visible{display:block}
+    .answer-sheet h2{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-light);margin-bottom:20px}
+    .answer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:24px}
+    .answer-row{display:flex;align-items:center;gap:10px;background:var(--bg3);
+      border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px}
+    .answer-row .ar-num{font-size:12px;color:var(--muted);font-weight:600;min-width:22px}
+    .answer-row .ar-val{font-size:14px;font-weight:700;color:var(--text);min-width:60px}
+    .answer-row .ar-val.filled{color:#60a5fa}
+    .answer-row .ar-val.empty{color:rgba(255,255,255,.2);font-style:italic}
+    .btn-grade{display:block;width:100%;background:linear-gradient(135deg,#065f46,#10b981);color:#fff;
+      border:none;border-radius:var(--radius);padding:18px;font-size:17px;font-weight:700;
+      cursor:pointer;letter-spacing:.3px;box-shadow:0 4px 20px rgba(16,185,129,.3);
+      transition:transform .15s,box-shadow .15s;margin-top:16px;font-family:'Outfit',sans-serif}
+    .btn-grade:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(16,185,129,.4)}
+    .btn-grade:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+    /* RESULTS */
+    .results{display:none;margin-top:40px}
+    .results.visible{display:block;animation:fadeInUp .5s ease both}
+    .score-card{background:linear-gradient(135deg,var(--bg3),#0f1f35);border:1px solid rgba(201,168,76,.25);
+      border-radius:var(--radius);padding:40px 32px;text-align:center;margin-bottom:32px;
+      position:relative;overflow:hidden}
+    .score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,var(--blue),var(--gold),var(--green))}
+    .score-label{font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+    .score-number{font-family:'Playfair Display',serif;font-size:72px;font-weight:700;line-height:1;margin-bottom:8px}
+    .score-pct{font-size:20px;color:var(--muted);margin-bottom:20px}
+    .score-bar-wrap{background:rgba(255,255,255,.07);border-radius:999px;height:10px;max-width:400px;
+      margin:0 auto 20px;overflow:hidden}
+    .score-bar-fill{height:100%;border-radius:999px;transition:width 1.2s ease}
+    .score-grade{font-size:18px;font-weight:700}
+
+    .feedback-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+      padding:22px 24px;margin-bottom:14px}
+    .feedback-item.correct{border-left:4px solid var(--green)}
+    .feedback-item.incorrect{border-left:4px solid var(--red)}
+    .feedback-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .feedback-badge{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+      padding:3px 10px;border-radius:6px}
+    .badge-correct{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+    .badge-incorrect{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+    .feedback-q{font-size:14px;font-weight:600;color:var(--text);flex:1}
+    .feedback-body{font-size:14px;color:var(--muted);line-height:1.65}
+    .feedback-body strong{color:var(--text)}
+    .feedback-body .why{margin-top:8px;padding:10px 14px;background:rgba(255,255,255,.03);
+      border-radius:8px;border:1px solid var(--border)}
+
+    .weak-card{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(245,158,11,.02));
+      border:1px solid rgba(245,158,11,.25);border-radius:var(--radius);padding:28px;margin-bottom:16px}
+    .weak-card h3{font-size:16px;font-weight:700;color:var(--amber);margin-bottom:10px}
+    .weak-card ul{padding-left:18px;margin-top:8px}
+    .weak-card li{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:4px}
+
+    .bonus-q-card{background:linear-gradient(135deg,rgba(59,130,246,.06),rgba(59,130,246,.02));
+      border:1px solid rgba(59,130,246,.2);border-radius:var(--radius);padding:24px 26px;margin-bottom:14px}
+
+    @media(max-width:600px){
+      .q-card{padding:20px 16px}
+      .score-number{font-size:52px}
+      .answer-grid{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+<div class="sticky-bar" id="stickyBar">
+  <strong id="sbCount">0 / 40</strong> answered
+  <div class="sb-fill"><div class="sb-fill-inner" id="sbFill" style="width:0%"></div></div>
+  <span id="sbLabel">C104 · Exam 1</span>
+</div>
+
+<div id="app">
+
+  <div class="hero">
+    <div class="hero-badge">C104 · Capital Punishment</div>
+    <h1>Exam 1 Practice Quiz</h1>
+    <p>40 university-level questions covering the Indiana death penalty statute, deterrence, retribution, IAC, and both guest speakers. Answer every question, then submit for instant grading.</p>
+    <div class="hero-stats">
+      <div class="stat-pill"><span>30</span> Multiple Choice</div>
+      <div class="stat-pill"><span>5</span> True / False</div>
+      <div class="stat-pill"><span>5</span> Application / Scenario</div>
+      <div class="stat-pill"><span>40</span> Total Questions</div>
+    </div>
+  </div>
+
+  <!-- PART A: MC 1-30 -->
+  <div class="section-header">
+    <div class="label">Part A</div><div class="line"></div>
+    <div class="section-tag">Multiple Choice · Q1–30</div>
+  </div>
+
+  <div class="q-card" id="qc-1">
+    <div class="q-meta"><div class="q-num">Q1</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Under Indiana's death penalty statute, what is a "statutory aggravating circumstance"?</div>
+    <div class="options">
+      <div class="option" data-q="1" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Any background fact the defense wants the jury to hear about the defendant's childhood.</div>
+      <div class="option" data-q="1" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>A circumstance written into law that can make a murder eligible for death or LWOP.</div>
+      <div class="option" data-q="1" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>A judge's private opinion that a murder was especially cruel.</div>
+      <div class="option" data-q="1" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>A factor that automatically reduces a sentence from death to life in prison.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-2">
+    <div class="q-meta"><div class="q-num">Q2</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Indiana currently has approximately how many statutory aggravating circumstances?</div>
+    <div class="options">
+      <div class="option" data-q="2" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>4</div>
+      <div class="option" data-q="2" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>8</div>
+      <div class="option" data-q="2" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>12</div>
+      <div class="option" data-q="2" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>18</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-3">
+    <div class="q-meta"><div class="q-num">Q3</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Indiana has 8 statutory mitigating circumstances. Why has the legislature NOT needed to keep adding more mitigators the way it keeps adding aggravators?</div>
+    <div class="options">
+      <div class="option" data-q="3" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Mitigators are not legally required in capital cases.</div>
+      <div class="option" data-q="3" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Mitigator #8 is a catchall that allows any relevant circumstance to be introduced.</div>
+      <div class="option" data-q="3" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The Indiana Supreme Court ruled that 8 is constitutionally sufficient and no more may be added.</div>
+      <div class="option" data-q="3" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Defense attorneys are not permitted to present new types of evidence.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-4">
+    <div class="q-meta"><div class="q-num">Q4</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">What is the correct sequence of minimum age eligibility changes in Indiana's death penalty statute?</div>
+    <div class="options">
+      <div class="option" data-q="4" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>16 → 18 → 21</div>
+      <div class="option" data-q="4" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>14 → 16 → 18</div>
+      <div class="option" data-q="4" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>10 → 16 → 18</div>
+      <div class="option" data-q="4" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>12 → 18 → 21</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-5">
+    <div class="q-meta"><div class="q-num">Q5</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Under Indiana's Rule 6.1, how many defense attorneys must generally be appointed in a capital case?</div>
+    <div class="options">
+      <div class="option" data-q="5" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>One attorney with at least five years of experience.</div>
+      <div class="option" data-q="5" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>At least two attorneys with specified qualifications.</div>
+      <div class="option" data-q="5" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Three attorneys — one for guilt phase, one for penalty phase, one for appeal.</div>
+      <div class="option" data-q="5" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Any criminal defense attorney who agrees to take the case.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-6">
+    <div class="q-meta"><div class="q-num">Q6</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">LWOP stands for Life Without Parole. Under Indiana law, what do death and LWOP share at the eligibility stage?</div>
+    <div class="options">
+      <div class="option" data-q="6" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The same sentencing hearing procedure but different eligibility criteria.</div>
+      <div class="option" data-q="6" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The same statutory aggravator eligibility framework.</div>
+      <div class="option" data-q="6" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The same practical outcome — both mean the defendant never leaves prison.</div>
+      <div class="option" data-q="6" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>The same appeal rights but different jury requirements.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-7">
+    <div class="q-meta"><div class="q-num">Q7</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Under Indiana's capital statute, what is the legal effect of a defendant having an intellectual disability?</div>
+    <div class="options">
+      <div class="option" data-q="7" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>It is a mitigating factor the jury may consider, but it does not prevent a death sentence.</div>
+      <div class="option" data-q="7" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>It automatically converts a death sentence to LWOP after the fact.</div>
+      <div class="option" data-q="7" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>It bars the defendant from receiving death or LWOP under the capital statute.</div>
+      <div class="option" data-q="7" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>It requires the prosecution to drop all charges.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-8">
+    <div class="q-meta"><div class="q-num">Q8</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">How does serious mental illness function differently from intellectual disability under Indiana's capital statute?</div>
+    <div class="options">
+      <div class="option" data-q="8" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Mental illness, like intellectual disability, is an automatic bar to a death sentence.</div>
+      <div class="option" data-q="8" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Mental illness functions as mitigating evidence rather than an automatic bar to capital eligibility.</div>
+      <div class="option" data-q="8" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Mental illness prevents prosecution under the capital statute entirely.</div>
+      <div class="option" data-q="8" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Mental illness and intellectual disability are treated identically by Indiana law.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-9">
+    <div class="q-meta"><div class="q-num">Q9</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">What is the correct historical sequence of Indiana's execution methods?</div>
+    <div class="options">
+      <div class="option" data-q="9" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Electrocution → hanging → lethal injection</div>
+      <div class="option" data-q="9" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Lethal injection → electrocution → hanging</div>
+      <div class="option" data-q="9" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Hanging → electrocution → lethal injection</div>
+      <div class="option" data-q="9" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Hanging → lethal injection → electrocution</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-10">
+    <div class="q-meta"><div class="q-num">Q10</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Under today's Indiana law, what happens when a capital jury reaches a sentencing recommendation?</div>
+    <div class="options">
+      <div class="option" data-q="10" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The judge reviews the recommendation and may independently impose the opposite sentence.</div>
+      <div class="option" data-q="10" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The judge must follow the jury's recommendation.</div>
+      <div class="option" data-q="10" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The recommendation goes to the Indiana Supreme Court for final approval.</div>
+      <div class="option" data-q="10" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>The recommendation is non-binding, and the governor makes the final decision.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-11">
+    <div class="q-meta"><div class="q-num">Q11</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">What happens in Indiana if the capital jury deadlocks — that is, cannot agree on a sentencing recommendation?</div>
+    <div class="options">
+      <div class="option" data-q="11" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The defendant automatically receives LWOP.</div>
+      <div class="option" data-q="11" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The judge may then make the sentencing decision.</div>
+      <div class="option" data-q="11" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>A new jury is empaneled for a second penalty phase.</div>
+      <div class="option" data-q="11" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>The judge is still bound by the deadlocked jury's last known vote.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-12">
+    <div class="q-meta"><div class="q-num">Q12</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Among the 23 people executed by Indiana, which demographic description is accurate?</div>
+    <div class="options">
+      <div class="option" data-q="12" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>All were female and roughly half were White.</div>
+      <div class="option" data-q="12" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>About half were male, and the racial breakdown was roughly even.</div>
+      <div class="option" data-q="12" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>All were male, and about 86% were White.</div>
+      <div class="option" data-q="12" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Most were female, and victims were predominantly Black.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-13">
+    <div class="q-meta"><div class="q-num">Q13</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Of the 41 total victims connected to Indiana's 23 executions, approximately what percentage were White?</div>
+    <div class="options">
+      <div class="option" data-q="13" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>About 40%</div>
+      <div class="option" data-q="13" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>About 60%</div>
+      <div class="option" data-q="13" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>About 75%</div>
+      <div class="option" data-q="13" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>About 95%</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-14">
+    <div class="q-meta"><div class="q-num">Q14</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">What does "prosecutorial discretion" mean in the capital punishment context?</div>
+    <div class="options">
+      <div class="option" data-q="14" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Prosecutors must seek death in every case where a statutory aggravator is present.</div>
+      <div class="option" data-q="14" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Judges can overrule a prosecutor's decision not to seek death.</div>
+      <div class="option" data-q="14" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The prosecutor has legal decision-making authority to choose whether to pursue death or other enhanced punishments.</div>
+      <div class="option" data-q="14" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Only state attorneys general — not county prosecutors — may request the death penalty.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-15">
+    <div class="q-meta"><div class="q-num">Q15</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Of the 97 people sentenced to death in Indiana, roughly what fraction were later removed from death row through reversal, commutation, or dismissal?</div>
+    <div class="options">
+      <div class="option" data-q="15" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>About one-quarter</div>
+      <div class="option" data-q="15" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>About one-third</div>
+      <div class="option" data-q="15" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Roughly two-thirds</div>
+      <div class="option" data-q="15" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Nearly all of them</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-16">
+    <div class="q-meta"><div class="q-num">Q16</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">A reversal of a death sentence most accurately means which of the following?</div>
+    <div class="options">
+      <div class="option" data-q="16" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The person was proven innocent of the crime and released from prison.</div>
+      <div class="option" data-q="16" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The conviction was upheld but execution was delayed by ten years.</div>
+      <div class="option" data-q="16" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>A legal problem was found that may require a new penalty phase, new trial, or a negotiated sentence — not necessarily that the person is innocent.</div>
+      <div class="option" data-q="16" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>The victim's family forgave the defendant, triggering an automatic sentence reduction.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-17">
+    <div class="q-meta"><div class="q-num">Q17</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">In the Jeffrey Weisheit case, what is the State's core argument for why an execution date should be set?</div>
+    <div class="options">
+      <div class="option" data-q="17" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Weisheit has confessed and voluntarily waived all remaining appeals.</div>
+      <div class="option" data-q="17" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The entire conventional legal review chain — direct appeal, state post-conviction, federal habeas, Seventh Circuit, and U.S. Supreme Court — has concluded with no relief for Weisheit.</div>
+      <div class="option" data-q="17" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The defense has already completed its clemency petition.</div>
+      <div class="option" data-q="17" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>The U.S. Supreme Court issued a mandate ordering Indiana to set an execution date.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-18">
+    <div class="q-meta"><div class="q-num">Q18</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">The defense memory anchor for Weisheit is BRAIN + MERCY + MIND + MEDS. What does MERCY specifically refer to?</div>
+    <div class="options">
+      <div class="option" data-q="18" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>A letter of forgiveness from the victim's family</div>
+      <div class="option" data-q="18" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Clemency — an executive act that could reduce or commute the death sentence</div>
+      <div class="option" data-q="18" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>A mitigating circumstance already presented and weighed at the original trial</div>
+      <div class="option" data-q="18" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>A new federal law restricting executions</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-19">
+    <div class="q-meta"><div class="q-num">Q19</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">The four requirements for effective deterrence are Strong, Sure, Swift, and Seen. Which requirement refers to the likelihood that an offender actually expects punishment to follow their crime?</div>
+    <div class="options">
+      <div class="option" data-q="19" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Strong (Severity)</div>
+      <div class="option" data-q="19" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Swift (Celerity)</div>
+      <div class="option" data-q="19" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Seen (Publicity)</div>
+      <div class="option" data-q="19" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Sure (Certainty)</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-20">
+    <div class="q-meta"><div class="q-num">Q20</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Marginal deterrence — the "Comparison" type — asks which specific question?</div>
+    <div class="options">
+      <div class="option" data-q="20" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Does any punishment deter crime compared with no punishment at all?</div>
+      <div class="option" data-q="20" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Does the death penalty deter more than Life Without Parole?</div>
+      <div class="option" data-q="20" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>How many people are deterred from committing murder each year?</div>
+      <div class="option" data-q="20" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Do public executions reduce crime in surrounding counties?</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-21">
+    <div class="q-meta"><div class="q-num">Q21</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">The "brutalization hypothesis," associated with Bowers and Pierce, argues what?</div>
+    <div class="options">
+      <div class="option" data-q="21" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Executions create such a strong deterrent effect that they sometimes reduce other violent crimes too.</div>
+      <div class="option" data-q="21" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Executions may actually increase homicides by modeling or legitimizing lethal violence.</div>
+      <div class="option" data-q="21" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Long prison sentences brutalize inmates, making them more dangerous upon release.</div>
+      <div class="option" data-q="21" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Brutal murder methods deserve equally brutal state punishment in return.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-22">
+    <div class="q-meta"><div class="q-num">Q22</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">In Shepherd's state-by-state study of execution effects, which category did Indiana fall into?</div>
+    <div class="options">
+      <div class="option" data-q="22" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Deterrence — executions were associated with fewer homicides in Indiana.</div>
+      <div class="option" data-q="22" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>No effect — executions had no measurable impact in Indiana.</div>
+      <div class="option" data-q="22" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Brutalization — executions were associated with more homicides in Indiana.</div>
+      <div class="option" data-q="22" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Indiana was not included in Shepherd's study.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-23">
+    <div class="q-meta"><div class="q-num">Q23</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">What is the correct takeaway from Nagin and the National Research Council's review of deterrence research?</div>
+    <div class="options">
+      <div class="option" data-q="23" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The research conclusively proved that the death penalty does not deter homicide.</div>
+      <div class="option" data-q="23" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The research conclusively proved that the death penalty deters approximately 8 murders per execution.</div>
+      <div class="option" data-q="23" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Existing research cannot reliably determine whether capital punishment increases, decreases, or has no effect on homicide.</div>
+      <div class="option" data-q="23" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Nagin found brutalization in most states and deterrence in only a few.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-24">
+    <div class="q-meta"><div class="q-num">Q24</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Retribution, as a justification for punishment, is best described as:</div>
+    <div class="options">
+      <div class="option" data-q="24" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Punishing offenders so that future would-be criminals are discouraged from committing crimes.</div>
+      <div class="option" data-q="24" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Punishing offenders because they deserve it for what they have already done.</div>
+      <div class="option" data-q="24" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Restoring the offender to a law-abiding life through rehabilitation programs.</div>
+      <div class="option" data-q="24" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Satisfying the emotional need for revenge felt by the victim's family.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-25">
+    <div class="q-meta"><div class="q-num">Q25</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Which memory image correctly contrasts deterrence and retribution?</div>
+    <div class="options">
+      <div class="option" data-q="25" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Deterrence is the rearview mirror; retribution is the windshield.</div>
+      <div class="option" data-q="25" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Both deterrence and retribution look forward to preventing future harm.</div>
+      <div class="option" data-q="25" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Retribution is the rearview mirror; deterrence is the windshield.</div>
+      <div class="option" data-q="25" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Retribution and deterrence are two names for the same concept.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-26">
+    <div class="q-meta"><div class="q-num">Q26</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Robert Blecker argues that death should be reserved for the "worst of the worst." His argument is rooted primarily in which rationale?</div>
+    <div class="options">
+      <div class="option" data-q="26" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Deterrence — the most serious criminals need the harshest threat to be deterred.</div>
+      <div class="option" data-q="26" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Rehabilitation — the worst offenders are beyond reform and must be permanently removed.</div>
+      <div class="option" data-q="26" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Retribution — only those who truly deserve death should receive it, and punishment must be proportional to culpability.</div>
+      <div class="option" data-q="26" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Incapacitation — executing the worst offenders prevents them from ever killing again.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-27">
+    <div class="q-meta"><div class="q-num">Q27</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Under Strickland v. Washington, what two things must a defendant prove to win an Ineffective Assistance of Counsel (IAC) claim?</div>
+    <div class="options">
+      <div class="option" data-q="27" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The lawyer was inexperienced AND the defendant was actually innocent.</div>
+      <div class="option" data-q="27" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The lawyer's performance was deficient AND that deficiency had a meaningful effect on the outcome (prejudice).</div>
+      <div class="option" data-q="27" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The lawyer disliked the defendant AND failed to attend all scheduled hearings.</div>
+      <div class="option" data-q="27" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>The lawyer was publicly disciplined by the bar AND the jury convicted wrongly.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-28">
+    <div class="q-meta"><div class="q-num">Q28</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Why is there a conflict of interest when a former trial lawyer testifies about whether their own representation was constitutionally adequate?</div>
+    <div class="options">
+      <div class="option" data-q="28" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Former lawyers are legally prohibited from testifying in any proceeding involving a former client.</div>
+      <div class="option" data-q="28" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The attorney has a personal interest in defending their own competence and reputation, which conflicts with the former client's interest in proving IAC.</div>
+      <div class="option" data-q="28" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Defense lawyers universally refuse to testify against each other under a professional code of silence.</div>
+      <div class="option" data-q="28" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Attorney-client privilege permanently bars any discussion of the original case.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-29">
+    <div class="q-meta"><div class="q-num">Q29</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">According to Jean Giles's presentation, what does "winning" sometimes mean for a capital defense attorney?</div>
+    <div class="options">
+      <div class="option" data-q="29" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Getting the client completely acquitted and released from custody.</div>
+      <div class="option" data-q="29" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Securing a gubernatorial pardon for the defendant.</div>
+      <div class="option" data-q="29" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The client receiving LWOP instead of a death sentence.</div>
+      <div class="option" data-q="29" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Successfully delaying the execution by ten or more years.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-30">
+    <div class="q-meta"><div class="q-num">Q30</div><div class="q-type type-mc">Multiple Choice</div></div>
+    <div class="q-text">Prosecutor Jeremy Mull said the death penalty does not work well as a deterrent. Which two requirements for effective deterrence did he say it lacks?</div>
+    <div class="options">
+      <div class="option" data-q="30" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Publicity and proportionality</div>
+      <div class="option" data-q="30" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Severity and certainty</div>
+      <div class="option" data-q="30" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Certainty and celerity (swiftness)</div>
+      <div class="option" data-q="30" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Publicity and severity</div>
+    </div>
+  </div>
+
+  <!-- PART B: TF 31-35 -->
+  <div class="section-header">
+    <div class="label">Part B</div><div class="line"></div>
+    <div class="section-tag">True / False · Q31–35</div>
+  </div>
+
+  <div class="q-card" id="qc-31">
+    <div class="q-meta"><div class="q-num">Q31</div><div class="q-type type-tf">True / False</div></div>
+    <div class="q-text">True or False: Indiana's age-eligibility sequence (10 → 16 → 18) means Indiana once actually sentenced a 10-year-old to death.</div>
+    <div class="tf-options">
+      <div class="tf-btn" data-q="31" data-val="True" onclick="selectTF(this)">True</div>
+      <div class="tf-btn" data-q="31" data-val="False" onclick="selectTF(this)">False</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-32">
+    <div class="q-meta"><div class="q-num">Q32</div><div class="q-type type-tf">True / False</div></div>
+    <div class="q-text">True or False: Indiana's state death row is located in Terre Haute, Indiana.</div>
+    <div class="tf-options">
+      <div class="tf-btn" data-q="32" data-val="True" onclick="selectTF(this)">True</div>
+      <div class="tf-btn" data-q="32" data-val="False" onclick="selectTF(this)">False</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-33">
+    <div class="q-meta"><div class="q-num">Q33</div><div class="q-type type-tf">True / False</div></div>
+    <div class="q-text">True or False: Nagin's review concluded that existing evidence proves, beyond reasonable doubt, that the death penalty does not deter homicide.</div>
+    <div class="tf-options">
+      <div class="tf-btn" data-q="33" data-val="True" onclick="selectTF(this)">True</div>
+      <div class="tf-btn" data-q="33" data-val="False" onclick="selectTF(this)">False</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-34">
+    <div class="q-meta"><div class="q-num">Q34</div><div class="q-type type-tf">True / False</div></div>
+    <div class="q-text">True or False: More than 200 people on death row nationally have been exonerated — meaning cleared of the crime for which they were sentenced to die.</div>
+    <div class="tf-options">
+      <div class="tf-btn" data-q="34" data-val="True" onclick="selectTF(this)">True</div>
+      <div class="tf-btn" data-q="34" data-val="False" onclick="selectTF(this)">False</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-35">
+    <div class="q-meta"><div class="q-num">Q35</div><div class="q-type type-tf">True / False</div></div>
+    <div class="q-text">True or False: Under Indiana's current law, when a capital jury reaches a sentencing recommendation, the judge is legally bound to follow it.</div>
+    <div class="tf-options">
+      <div class="tf-btn" data-q="35" data-val="True" onclick="selectTF(this)">True</div>
+      <div class="tf-btn" data-q="35" data-val="False" onclick="selectTF(this)">False</div>
+    </div>
+  </div>
+
+  <!-- PART C: APPLICATION 36-40 -->
+  <div class="section-header">
+    <div class="label">Part C</div><div class="line"></div>
+    <div class="section-tag">Application / Scenario · Q36–40</div>
+  </div>
+
+  <div class="q-card" id="qc-36">
+    <div class="q-meta"><div class="q-num">Q36</div><div class="q-type type-app">Application</div></div>
+    <div class="q-scenario">A defendant is convicted of a double murder. At the penalty phase, the defense presents documentation showing the defendant has an IQ of 62 and was diagnosed with an intellectual disability before trial. The prosecutor argues the crime was so brutal that the jury should impose death regardless.</div>
+    <div class="q-text">Under Indiana's statute, how should the court treat this situation?</div>
+    <div class="options">
+      <div class="option" data-q="36" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The intellectual disability is mitigating evidence the jury may weigh, but death remains legally available.</div>
+      <div class="option" data-q="36" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The intellectual disability bars the defendant from receiving death or LWOP under the capital statute, regardless of how brutal the crime was.</div>
+      <div class="option" data-q="36" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The jury must still choose between death and LWOP because the disability was diagnosed, not court-ordered at the time of trial.</div>
+      <div class="option" data-q="36" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>The prosecutor's characterization of the crime's brutality overrides the disability finding.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-37">
+    <div class="q-meta"><div class="q-num">Q37</div><div class="q-type type-app">Application</div></div>
+    <div class="q-scenario">During a post-conviction hearing, the defense calls the defendant's former trial attorney to testify. The attorney is asked: "Did you fail to investigate your client's history of severe childhood abuse before the penalty phase?" The attorney answers: "I made a strategic choice to focus resources on the guilt phase, and my penalty-phase investigation was adequate."</div>
+    <div class="q-text">Which course concept does this situation most directly illustrate?</div>
+    <div class="options">
+      <div class="option" data-q="37" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The brutalization hypothesis — the lawyer modeled harmful behavior.</div>
+      <div class="option" data-q="37" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Prosecutorial discretion — the prosecutor chose not to seek death.</div>
+      <div class="option" data-q="37" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The IAC conflict of interest — a lawyer "grading their own exam," with a personal stake in finding their own past performance adequate.</div>
+      <div class="option" data-q="37" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>General deterrence — the lawyer's conduct discourages other lawyers from similar shortcuts.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-38">
+    <div class="q-meta"><div class="q-num">Q38</div><div class="q-type type-app">Application</div></div>
+    <div class="q-scenario">A state legislator proposes two new laws: (1) "Murder committed during a carjacking shall be a statutory aggravating circumstance," and (2) "The defendant's history of being placed in foster care shall be added as statutory mitigator #9."</div>
+    <div class="q-text">Based on course concepts, which proposal is more consistent with how Indiana's capital statute actually operates — and why?</div>
+    <div class="options">
+      <div class="option" data-q="38" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>The mitigator proposal, because the statute needs new categories to reflect changing social science.</div>
+      <div class="option" data-q="38" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Both proposals are equally necessary to keep aggravators and mitigators balanced.</div>
+      <div class="option" data-q="38" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Neither proposal is legally permissible under current Indiana constitutional law.</div>
+      <div class="option" data-q="38" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>The aggravator proposal, because Indiana's history shows the legislature expands the aggravator list; the mitigator list stays at 8 because mitigator #8 is already a catchall that covers any new type of evidence.</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-39">
+    <div class="q-meta"><div class="q-num">Q39</div><div class="q-type type-app">Application</div></div>
+    <div class="q-scenario">A newspaper editorial argues: "The death penalty obviously deters murder — it is the harshest punishment possible, so anyone considering killing someone will think twice." A criminology professor responds: "Severity alone is not enough. The key question is whether would-be killers actually believe they will be caught, charged, convicted, and executed — and whether all of that will happen quickly enough to affect their decision-making in the moment."</div>
+    <div class="q-text">The professor's response challenges the editorial by focusing on which two requirements from the four-part deterrence framework?</div>
+    <div class="options">
+      <div class="option" data-q="39" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Strong and Seen</div>
+      <div class="option" data-q="39" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>Sure (certainty) and Swift (celerity)</div>
+      <div class="option" data-q="39" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>Seen and Swift</div>
+      <div class="option" data-q="39" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Strong and Sure</div>
+    </div>
+  </div>
+
+  <div class="q-card" id="qc-40">
+    <div class="q-meta"><div class="q-num">Q40</div><div class="q-type type-app">Application</div></div>
+    <div class="q-scenario">Prosecutor Maria reviews a case file. The defendant committed a premeditated murder of a police officer (a statutory aggravator exists). However, the defendant has a documented history of severe schizophrenia — a serious mental illness, not an intellectual disability. After consulting the victim's family, Maria learns that several family members oppose seeking death because of the years of appeals it would trigger. Maria ultimately decides to pursue LWOP rather than death.</div>
+    <div class="q-text">Which combination of course concepts best explains Maria's decision?</div>
+    <div class="options">
+      <div class="option" data-q="40" data-val="A" onclick="selectOpt(this)"><div class="option-letter">A</div>Prosecutorial discretion (she is not required to seek death even if an aggravator is present) + mental illness as mitigation (not an automatic bar) + victim-family wishes (which inform but do not legally control her decision).</div>
+      <div class="option" data-q="40" data-val="B" onclick="selectOpt(this)"><div class="option-letter">B</div>The intellectual disability bar prevents death here, so LWOP is the only legally available option.</div>
+      <div class="option" data-q="40" data-val="C" onclick="selectOpt(this)"><div class="option-letter">C</div>The victim family's opposition is legally binding and forces Maria to choose LWOP.</div>
+      <div class="option" data-q="40" data-val="D" onclick="selectOpt(this)"><div class="option-letter">D</div>Retributive justice requires proportional punishment, and schizophrenia automatically reduces the sentence below death.</div>
+    </div>
+  </div>
+
+  <!-- SUBMIT ZONE -->
+  <div class="submit-zone" id="submitZone">
+    <div class="progress-text">You have answered <strong id="answeredCount">0</strong> of <strong>40</strong> questions.</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+    <button class="btn-submit" id="btnShowAnswerSheet" onclick="showAnswerSheet()">✦ Review Answer Sheet &amp; Submit</button>
+  </div>
+
+  <!-- ANSWER SHEET -->
+  <div class="answer-sheet" id="answerSheet">
+    <h2>📋 Answer Sheet</h2>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:20px;">Review your selections below. When ready, click <strong style="color:var(--green)">Submit for Grading</strong>.</p>
+    <div class="answer-grid" id="answerGrid"></div>
+    <button class="btn-grade" id="btnGrade" onclick="gradeQuiz()">✔ Submit for Grading</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results"></div>
+
+</div><!-- /app -->
+
+<script>
+const ANSWER_KEY = {
+  1:{ans:'B',topic:'Indiana Statute'},2:{ans:'D',topic:'Indiana Statute'},
+  3:{ans:'B',topic:'Indiana Statute'},4:{ans:'C',topic:'Indiana Statute'},
+  5:{ans:'B',topic:'Indiana Statute'},6:{ans:'B',topic:'Indiana Statute'},
+  7:{ans:'C',topic:'Indiana Statute'},8:{ans:'B',topic:'Indiana Statute'},
+  9:{ans:'C',topic:'Indiana Statute'},10:{ans:'B',topic:'Indiana Statute'},
+  11:{ans:'B',topic:'Indiana Statute'},12:{ans:'C',topic:'Indiana Statistics'},
+  13:{ans:'D',topic:'Indiana Statistics'},14:{ans:'C',topic:'Indiana Statistics'},
+  15:{ans:'C',topic:'Indiana Statistics'},16:{ans:'C',topic:'Indiana Statistics'},
+  17:{ans:'B',topic:'Jeffrey Weisheit'},18:{ans:'B',topic:'Jeffrey Weisheit'},
+  19:{ans:'D',topic:'Deterrence'},20:{ans:'B',topic:'Deterrence'},
+  21:{ans:'B',topic:'Deterrence'},22:{ans:'C',topic:'Deterrence'},
+  23:{ans:'C',topic:'Deterrence'},24:{ans:'B',topic:'Retribution'},
+  25:{ans:'C',topic:'Retribution'},26:{ans:'C',topic:'Retribution'},
+  27:{ans:'B',topic:'IAC / Strickland'},28:{ans:'B',topic:'IAC / Strickland'},
+  29:{ans:'C',topic:'Jean Giles'},30:{ans:'C',topic:'Jeremy Mull'},
+  31:{ans:'False',topic:'Indiana Statute'},32:{ans:'False',topic:'National Status'},
+  33:{ans:'False',topic:'Deterrence'},34:{ans:'True',topic:'National Status'},
+  35:{ans:'True',topic:'Indiana Statute'},36:{ans:'B',topic:'Indiana Statute'},
+  37:{ans:'C',topic:'IAC / Strickland'},38:{ans:'D',topic:'Indiana Statute'},
+  39:{ans:'B',topic:'Deterrence'},40:{ans:'A',topic:'Jeremy Mull'},
+};
+
+const EXP = {
+  1:{why:"A statutory aggravating circumstance is defined in the statute itself and makes a murder eligible for death or LWOP — it is not a judge's opinion (C), mitigating evidence (A), or a sentence reducer (D).",wrong:{A:"That describes defense mitigation evidence.",C:"Aggravators must be defined by the legislature, not a judge's opinion.",D:"Aggravators open the door to harsher punishment, not lighter punishment."}},
+  2:{why:"Prof. Sandys stated Indiana has approximately 18 statutory aggravators. The mitigator count (8) is a common wrong-answer trap.",wrong:{A:"4 is far too few.",B:"8 is the number of mitigators, not aggravators.",C:"12 is not the figure given in class."}},
+  3:{why:"Mitigator #8 — 'any other circumstance appropriate for consideration' — is the bottomless catchall box. Defense attorneys can introduce any new type of mitigating evidence through it without the legislature adding categories.",wrong:{A:"Mitigators are legally required in capital sentencing.",C:"No such Indiana Supreme Court ruling was described.",D:"Defense can and must introduce new evidence types."}},
+  4:{why:"10 → 16 → 18 is the exact three-step sequence. Today's minimum is 18 at the time of the crime.",wrong:{A:"21 was never part of the sequence.",B:"14 was not part of the sequence described.",D:"12 and 21 were not mentioned."}},
+  5:{why:"Rule 6.1 requires at least two qualified attorneys with specified experience, limited caseloads, and reimbursement for investigators and experts.",wrong:{A:"One attorney does not meet the capital requirement.",C:"Three is not the stated standard.",D:"Any ordinary attorney cannot simply be assigned."}},
+  6:{why:"Indiana's statute uses the same statutory aggravator framework as the eligibility gate for both death and LWOP. They diverge at the penalty decision, not at eligibility.",wrong:{A:"They share eligibility criteria, not just procedure.",C:"Death ends the life; LWOP does not — they are radically different outcomes even if both mean the defendant stays incarcerated.",D:"The course did not state different jury requirements for eligibility."}},
+  7:{why:"Intellectual disability is a statutory eligibility shield — it bars death and LWOP under the capital statute. It is not merely mitigation.",wrong:{A:"That describes mental illness, not intellectual disability.",B:"The statute bars eligibility entirely, not just reduces the sentence after the fact.",D:"The defendant may still be convicted of murder; the disability affects capital sentencing eligibility only."}},
+  8:{why:"Critical distinction: ID = eligibility shield. Mental illness = mitigation only. Mental illness does not automatically bar a death sentence under Indiana's statute.",wrong:{A:"Mental illness is NOT an automatic bar — that is the key distinction.",C:"Mental illness does not prevent prosecution under the capital statute.",D:"The course explicitly distinguished these two."}},
+  9:{why:"Rope → electric chair → syringe. Hanging came first, then electrocution, then lethal injection (current).",wrong:{A:"Electrocution came before lethal injection, not first.",B:"Lethal injection is the most recent, not the earliest.",D:"Hanging was first; lethal injection is not the middle step."}},
+  10:{why:"Since Indiana abolished judge override, jury recommendations are binding. The judge must follow them, even though the statute still uses the word 'recommendation.'",wrong:{A:"Judge override was eliminated.",C:"The Indiana Supreme Court handles automatic appellate review of the case, not approval of each recommendation.",D:"The governor does not sentence in this context."}},
+  11:{why:"Jury deadlock (failure to reach a recommendation) is distinct from a completed recommendation. When the jury deadlocks, the judge steps in and makes the sentencing decision.",wrong:{A:"Deadlock does not automatically produce LWOP.",C:"A new jury is not empaneled.",D:"A deadlocked jury has no binding 'last known vote.'"}},
+  12:{why:"All 23 executed were male; approximately 86% were White (3 were Black). The key pattern: all men, mostly White defendants.",wrong:{A:"None of the 23 were female.",B:"All — not half — were male.",D:"Both facts are wrong — defendants and victims were overwhelmingly male and White."}},
+  13:{why:"39 of 41 victims (approximately 95%) were White. The course emphasizes this overwhelmingly White victim pattern.",wrong:{A:"40% would imply a large minority share — far below the actual 95%.",B:"60% dramatically understates the concentration.",C:"75% is closer but still well short of the actual figure."}},
+  14:{why:"Prosecutorial discretion = the prosecutor has legal decision-making authority over whether to seek death. An aggravator makes death available but does not compel the prosecutor.",wrong:{A:"Prosecutors are NOT required to seek death just because an aggravator exists.",B:"Judges do not overrule charging decisions.",D:"County prosecutors — not only attorneys general — seek death in Indiana."}},
+  15:{why:"Approximately 61 of 97 (roughly two-thirds) were removed via reversal, commutation, or similar. 23 were executed; the rest died or were executed elsewhere.",wrong:{A:"One-quarter drastically understates the removal rate.",B:"One-third is too low.",D:"'Nearly all' overstates — 23 were executed."}},
+  16:{why:"Reversal ≠ exoneration. A reversal corrects a legal error. The result may be a new penalty phase, new trial, LWOP plea, or other resolution — not necessarily a finding of innocence.",wrong:{A:"That describes exoneration, a separate concept.",B:"A delayed execution is not what reversal means.",D:"Victim forgiveness is not a legal mechanism for sentence reduction."}},
+  17:{why:"STATE = DONE. The State argues: direct appeal complete, state PCR complete, federal habeas denied, Seventh Circuit affirmed, SCOTUS denied certiorari — the conventional review chain is exhausted.",wrong:{A:"No information indicates Weisheit waived all appeals.",C:"Clemency is something the defense says still needs to happen.",D:"SCOTUS denied review; it did not order a date."}},
+  18:{why:"MERCY = clemency — an executive act (e.g., from the governor) that could reduce or commute the death sentence. BRAIN=brain injury, MIND=competency, MEDS=execution drugs.",wrong:{A:"Victim family forgiveness was not the MERCY component.",C:"A trial-phase mitigator is in the past; MERCY is a future executive action.",D:"No such federal law was discussed."}},
+  19:{why:"Sure = certainty = the offender's actual expectation that punishment will follow. Strong=severity, Swift=celerity, Seen=publicity.",wrong:{A:"Strong is about the magnitude/severity of the punishment.",B:"Swift is about timing — how quickly punishment follows.",C:"Seen is about publicity/visibility of the punishment."}},
+  20:{why:"Marginal deterrence asks: does death deter MORE than LWOP? It is the comparison at the margin of the harshest sanctions.",wrong:{A:"That is general deterrence, not marginal deterrence.",C:"Counting deterred individuals is a measurement challenge, not the definition.",D:"Geographic spillover is not the definition of marginal deterrence."}},
+  21:{why:"Brutalization hypothesis: state-sanctioned killing models or legitimizes lethal violence, potentially increasing rather than decreasing homicide.",wrong:{A:"The brutalization hypothesis is the opposite of a strong deterrent finding.",C:"That describes a different mechanism about inmate behavior after release.",D:"That describes a retributive sentiment, not the brutalization research finding."}},
+  22:{why:"Shepherd's results: 6 states = deterrence, 8 = no effect, 13 = brutalization. Indiana was in the brutalization group.",wrong:{A:"Indiana was in the brutalization group, not deterrence.",B:"Indiana was not in the no-effect group.",D:"Indiana was explicitly included — that is why it matters for the course."}},
+  23:{why:"NAGIN = NO RELIABLE ANSWER. He did NOT prove no deterrence. He found existing research too methodologically flawed to conclude whether capital punishment increases, decreases, or has no effect on homicide — particularly due to failure to compare properly against LWOP and weak assumptions about offender risk perception.",wrong:{A:"Nagin explicitly did not prove that death fails to deter — the conclusion is 'no reliable answer.'",B:"~8 fewer murders per execution is Ehrlich's finding, not Nagin's.",D:"That state-by-state breakdown describes Shepherd, not Nagin."}},
+  24:{why:"Retribution = punishment because the offender deserves it for past acts. It is past-looking, based on desert and proportionality. Not deterrence (A), rehabilitation (C), or unlimited revenge (D).",wrong:{A:"Discouraging future criminals is deterrence.",C:"Rehabilitation aims to reform the offender — not a retributive goal.",D:"Revenge can be unlimited and misdirected; retribution must be proportional and directed only at the guilty."}},
+  25:{why:"Retribution = rearview mirror (backward-looking, past act). Deterrence = windshield (forward-looking, future crime). This is the course's memory image.",wrong:{A:"This reverses the metaphor — a common mistake.",B:"Only deterrence looks forward; retribution is backward-looking.",D:"They are fundamentally different rationales."}},
+  26:{why:"Blecker's argument is retributive: only the truly deserving should face death, and punishment must be proportional. 'Worst of the worst' is a desert/proportionality claim, not a deterrence claim.",wrong:{A:"Blecker grounds his argument in retribution, not deterrence.",B:"His argument is not rehabilitative.",D:"Incapacitation could be a side effect, but his core argument is about moral desert."}},
+  27:{why:"BAD + MATTERED. Prong 1: deficient performance (BAD). Prong 2: prejudice — the deficiency meaningfully affected the outcome (MATTERED). Both required.",wrong:{A:"Innocence is not a Strickland prong.",C:"Disliking the client and missing hearings are not the legal standard.",D:"Public bar discipline and jury verdict are not the Strickland framework."}},
+  28:{why:"The lawyer is literally grading their own exam: the attorney's personal and professional interests align with finding their own past performance adequate, which directly conflicts with the former client's interest in proving IAC.",wrong:{A:"Former lawyers are permitted to testify.",C:"The course identified a structural conflict of interest, not a general code of silence.",D:"Post-conviction hearings have specific rules allowing disclosure; privilege does not permanently bar all discussion."}},
+  29:{why:"Giles described capital defense 'winning' as sometimes meaning LWOP instead of death — not acquittal or release. This separates the question of guilt from the question of punishment.",wrong:{A:"Complete acquittal was not what Giles described as the typical 'win' in most capital post-conviction cases.",B:"Gubernatorial pardons were not her primary example.",D:"Delay alone was not described as winning."}},
+  30:{why:"Mull echoed Sandys's framework: the death penalty lacks certainty (it rarely leads to actual execution) and celerity (executions take many years). He did not challenge its severity.",wrong:{A:"Proportionality is a retributive concept; Mull's deterrence critique focused on certainty and speed.",B:"Severity is NOT what Mull challenged — death is obviously severe.",D:"Mull's specific points were about certainty and celerity."}},
+  31:{why:"FALSE. The sequence 10→16→18 refers to statutory eligibility age — the age at which a defendant COULD be made eligible under the statute. Indiana did not actually sentence or execute a 10-year-old.",wrong:{}},
+  32:{why:"FALSE. Michigan City = Indiana STATE death row. Terre Haute = FEDERAL death row. These two locations are a frequently tested distinction.",wrong:{}},
+  33:{why:"FALSE. NAGIN = NO RELIABLE ANSWER. Nagin concluded that existing research cannot reliably determine whether the death penalty increases, decreases, or has no effect on homicide. He did not prove it fails to deter.",wrong:{}},
+  34:{why:"TRUE. The course materials (DPIC fact sheet) document more than 200 death-row exonerations nationally — people cleared of the crime for which they were sentenced to die.",wrong:{}},
+  35:{why:"TRUE. Indiana law changed so that a completed jury recommendation binds the judge — despite the statute still calling it a 'recommendation.' That is Sandys's statutory quirk.",wrong:{}},
+  36:{why:"Under Indiana's statute, intellectual disability is a hard eligibility bar — it prevents the defendant from receiving death or LWOP under the capital statute, regardless of the crime's brutality. The prosecutor's argument cannot override a statutory bar.",wrong:{A:"That describes how mental illness works, not intellectual disability.",C:"The diagnostic origin does not change the statutory bar.",D:"Statutory bars cannot be overcome by prosecutorial argument about brutality."}},
+  37:{why:"This is the textbook IAC conflict of interest — a lawyer grading their own exam. The attorney has a personal stake in concluding their performance was adequate, which directly conflicts with the former client's interest in proving IAC.",wrong:{A:"Brutalization is a deterrence concept unrelated to this scenario.",B:"Prosecutorial discretion concerns prosecution charging decisions, not defense counsel conduct.",D:"General deterrence is about discouraging the public from crime, not about attorney conduct."}},
+  38:{why:"Indiana's pattern: aggravators expand (legislature keeps adding new categories); mitigators stay at 8 because #8 is the catchall bottomless box absorbing all new types of evidence. A new mitigator is redundant.",wrong:{A:"The course says the opposite — mitigators do NOT need expansion because of #8.",B:"The course specifically notes the asymmetry: expanding aggravators, stable mitigators.",C:"Neither proposal is constitutionally impermissible — the aggravator one is simply more consistent with Indiana's actual history."}},
+  39:{why:"The professor's argument targets: Sure (certainty — 'will they actually believe they'll be caught and executed?') and Swift (celerity — 'quickly enough to affect their in-the-moment decision?'). Strong is what the editorial relied on. Seen is not the professor's focus.",wrong:{A:"Strong is the editorial's argument; Seen is not the professor's focus.",C:"Seen (publicity) is not specifically challenged in the professor's response.",D:"Strong is the editorial's claim — the professor is challenging beyond severity."}},
+  40:{why:"Three course concepts apply: (1) Prosecutorial discretion — aggravator present but prosecutor still chooses not to seek death; (2) mental illness = mitigation, not an automatic bar (unlike intellectual disability); (3) victim-family wishes inform but do not legally control the prosecutor's decision.",wrong:{B:"Schizophrenia is serious mental illness, NOT intellectual disability — the statutory bar does not apply.",C:"Victim-family wishes inform but are not legally binding on the prosecutor.",D:"Retribution does not automatically set sentences, and schizophrenia as mental illness is mitigation, not a mandatory sentence reducer."}},
+};
+
+const TOPIC_REVIEWS = {
+  'Indiana Statute':{title:'⚖️ Indiana Death Penalty Statute',bullets:['<strong>Aggravators vs. Mitigators:</strong> Aggravators have expanded to ~18. Mitigators stay at 8 because #8 is the catchall "bottomless box."','<strong>Age sequence:</strong> 10 → 16 → 18 (statutory eligibility only — no actual 10-year-old was sentenced to death).','<strong>Rule 6.1:</strong> At least TWO qualified attorneys + investigators + experts.','<strong>LWOP and death share the same aggravator eligibility door</strong> — different tracks, same gate.','<strong>Intellectual disability = eligibility SHIELD</strong> (bars death & LWOP). Mental illness = mitigation weight only.','<strong>Execution methods:</strong> Hanging → Electrocution → Lethal injection.','<strong>Binding jury recommendation:</strong> If the jury REACHES a recommendation → judge must follow it. If the jury DEADLOCKS → judge decides.']},
+  'Indiana Statistics':{title:'📊 Indiana Death Penalty Statistics',bullets:['23 executed — ALL male, ~86% White, 3 Black.','41 total victims — ~95% White (39 of 41).','Roughly <strong>two-thirds</strong> removed/reversed from death row.','Where reversals occurred: ~25% direct appeal / ~50% state post-conviction / ~25% federal review (Quarter → Half → Quarter).','<strong>Reversal ≠ Exoneration.</strong> Reversal = legal error corrected. Exoneration = actually cleared of the crime.','Death requests are now extremely rare — having the statute ≠ frequently using it.']},
+  'Jeffrey Weisheit':{title:'📁 Jeffrey Weisheit',bullets:['Two child victims (Caleb and Alyssa Lynch).','<strong>STATE = DONE:</strong> Direct appeal ✓ / State PCR ✓ / Federal habeas denied ✓ / 7th Circuit affirmed ✓ / SCOTUS denied cert ✓.','<strong>DEFENSE = BRAIN + MERCY + MIND + MEDS:</strong> Brain injury evidence / Clemency / Competency to be executed / Execution-drug concerns.','Competency to be executed ≠ guilt ≠ mental illness at trial ≠ intellectual disability.']},
+  'National Status':{title:'🗺️ National Capital Punishment Status',bullets:['National death-row population declining for 20+ consecutive years.','~27 states with death penalty; ~23 without.','<strong>Michigan City = Indiana STATE death row. Terre Haute = FEDERAL death row.</strong>','Long delays: ~16 years in Indiana; ~22–23 years nationally.','<strong>200+ exonerations</strong> nationally — people cleared of the crime they were sentenced to die for.','Exoneration ≠ reversal. Exoneration = actually innocent or cleared.']},
+  'Deterrence':{title:'🔍 Deterrence',bullets:['<strong>Four requirements:</strong> Strong (Severity) · Sure (Certainty) · Swift (Celerity) · Seen (Publicity).','<strong>Crowd = General deterrence; Culprit = Specific; Comparison = Marginal.</strong> Key comparison: death vs. LWOP.','Ehrlich: ~8 fewer murders per execution (deterrent). Bowers/Pierce: brutalization hypothesis.','Shepherd: 6 states = deter / 8 = no effect / 13 = brutalize. Indiana = brutalization.','<strong>NAGIN = NO RELIABLE ANSWER</strong> — NOT "proved no deterrence." Research is too flawed to conclude either way.']},
+  'Retribution':{title:'⚖️ Retribution',bullets:['Retribution = punishment because the offender <em>deserves</em> it for the past act. <strong>Rearview mirror.</strong>','Deterrence = forward-looking. <strong>Windshield.</strong>','Only guilty people deserve punishment; punishment must be proportional to the offense.','Retribution ≠ revenge. Revenge can be unlimited/misdirected; retribution must be proportional and directed only at the guilty.','<strong>Robert Blecker:</strong> "Worst of the worst" — who among the guilty truly deserves death? Retributive proportionality argument.']},
+  'IAC / Strickland':{title:'⚠️ Ineffective Assistance of Counsel (Strickland)',bullets:['<strong>BAD + MATTERED</strong> — both prongs required. Prong 1: deficient performance. Prong 2: prejudice (meaningful effect on outcome).','Strategic decisions that look bad in hindsight are NOT automatically "deficient."','Failure to investigate mitigation is a common capital IAC issue.','<strong>Conflict of interest:</strong> Lawyer grading their own exam — the attorney\'s personal interest in defending their reputation conflicts with the client\'s need to prove IAC.']},
+  'Jean Giles':{title:'📂 Guest Speaker: Jean Giles (Federal Defender)',bullets:['GILES = FILES — capital defense, post-conviction, mitigation investigation.','Winning can mean LWOP instead of death.','Mitigation = abuse, neglect, brain damage, trauma, mental illness. <strong>Explanation ≠ excuse.</strong>','Federal death row (Terre Haute): ~23 hrs/day lockdown, isolated, limited access.','Not all victim families support execution — some actively oppose it.','Public defender quality depends heavily on resources and caseload.']},
+  'Jeremy Mull':{title:'🔎 Guest Speaker: Jeremy Mull (Prosecutor)',bullets:['MULL MULLS: (1) Statutory aggravator present? (2) Would a jury realistically impose death? (3) Is it appropriate given the circumstances?','<strong>Oberhansley:</strong> Switched from death to LWOP due to severe mental illness; jurors said they wouldn\'t have voted death.','Mental illness ≠ intellectual disability. Mental illness = mitigation; ID = statutory bar.','<strong>Malingering</strong> = deliberately faking or exaggerating symptoms.','Death-qualified jury = jurors must be WILLING TO CONSIDER death — not eager for it.','Victim families inform but do not control the prosecutor\'s decision.','Mull: death penalty lacks certainty and celerity → weak deterrent.','<strong>Reversal ≠ factual innocence.</strong> None of Mull\'s death-penalty defendants were actually executed.']},
+};
+
+const BONUS = {
+  'Indiana Statute':[
+    {q:"Which of the following best describes mitigator #8 in Indiana's capital statute?",opts:["A) It is reserved only for defendants under age 21.","B) It is a catchall allowing any relevant mitigating circumstance to be considered.","C) It automatically converts a death sentence to LWOP.","D) It applies only if the first seven mitigators do not cover the situation."],ans:'B',exp:"Mitigator #8 is the 'bottomless box' — 'any other circumstance appropriate for consideration.' No age limits, no automatic conversions, no exclusivity."},
+    {q:"What did Indiana's 'judge override' power allow, before it was abolished?",opts:["A) Judges could impose death even if the prosecutor did not request it.","B) Judges could impose a different sentence than the jury recommended.","C) Judges could order a new guilt-phase trial if dissatisfied with the verdict.","D) Judges could reduce any death sentence to LWOP without giving reasons."],ans:'B',exp:"Judge override meant the judge could independently choose the opposite sentence from the jury's recommendation. Indiana had 18 such cases. It was abolished; jury recommendations are now binding when reached."},
+    {q:"Under Rule 6.1, in addition to at least two qualified attorneys, what else must Indiana provide or reimburse in capital cases?",opts:["A) The defendant's housing costs during trial.","B) Reasonable costs for investigators and experts.","C) Legal fees for the victim's family.","D) Juror travel and lodging expenses."],ans:'B',exp:"Rule 6.1 requires reimbursement for reasonable investigation and expert costs — critical because capital defense requires far more investigation than ordinary cases, and failures can become IAC claims."},
+  ],
+  'Indiana Statistics':[
+    {q:"Of the 97 people sentenced to death in Indiana, approximately how many were actually executed by Indiana?",opts:["A) 61","B) 40","C) 23","D) 6"],ans:'C',exp:"23 of the 97 were executed by Indiana. The rest were removed through reversal, commutation, death from other causes, or execution by other states."},
+    {q:"At which stage of review did the highest percentage of Indiana death-sentence reversals occur?",opts:["A) Direct appeal (about 23%)","B) State post-conviction (about 54%)","C) Federal review (about 23%)","D) Clemency proceedings"],ans:'B',exp:"About half of reversals occurred at state post-conviction. Direct appeal and federal review each accounted for roughly a quarter — the Quarter → Half → Quarter pattern."},
+  ],
+  'Jeffrey Weisheit':[
+    {q:"In Weisheit, the defense's MEDS component refers to which remaining issue?",opts:["A) The defendant's need for psychiatric medication in prison.","B) Concerns about the availability and protocols for Indiana's lethal injection drugs.","C) A claim that the defendant cannot make medical decisions competently.","D) A challenge to crime-lab drug testing."],ans:'B',exp:"MEDS = execution-drug concerns — questions about the availability, constitutionality, or protocol of Indiana's lethal injection drugs."},
+    {q:"What does 'competency to be executed' mean, and how does it differ from other competency questions?",opts:["A) Whether the defendant was mentally competent at the time of the crime.","B) Whether the defendant is competent to stand trial.","C) Whether the defendant has an intellectual disability barring capital eligibility.","D) Whether the defendant sufficiently understands that they are being executed and why."],ans:'D',exp:"Competency to be executed is its own legal issue: does the person understand that they will be executed and the reason for it? Separate from trial competency, guilt, intellectual disability, and ordinary mental illness."},
+  ],
+  'National Status':[
+    {q:"Where is the federal death row located?",opts:["A) Michigan City, Indiana","B) Huntsville, Texas","C) Terre Haute, Indiana","D) Florence, Colorado"],ans:'C',exp:"Federal death row is in Terre Haute, Indiana. Michigan City is Indiana's STATE death row. These two are a frequently tested distinction."},
+    {q:"Nationally, roughly how long had people under death sentences spent on death row on average, according to the course data?",opts:["A) About 5 years","B) About 12 years","C) About 22–23 years","D) About 35 years"],ans:'C',exp:"BJS data showed roughly 22 years on average; people executed in 2023 had spent about 23 years (279 months). This matters for the celerity/deterrence argument."},
+  ],
+  'Deterrence':[
+    {q:"General deterrence targets whom?",opts:["A) Only the specific offender who committed the crime.","B) The general public — discouraging others from committing crimes.","C) Only people already on death row.","D) Future jurors deciding penalty-phase cases."],ans:'B',exp:"General deterrence = Crowd. Punishing one offender to discourage the broader public. Specific deterrence = Culprit (the individual offender)."},
+    {q:"Ehrlich's research is significant because it claimed what?",opts:["A) Executions had no measurable effect on homicide rates.","B) Each additional execution was associated with approximately 7–8 fewer murders.","C) The death penalty increased homicide through brutalization.","D) Only swift executions (within one year of sentencing) produced deterrence."],ans:'B',exp:"Ehrlich estimated a deterrent effect of ~7–8 fewer murders per execution. Later researchers challenged these findings, and Nagin ultimately concluded existing research offers no reliable answer."},
+    {q:"Why did Nagin's review find existing deterrence research unreliable? Select the best answer.",opts:["A) Most studies were conducted in foreign legal systems.","B) Studies relied on self-reported crime data too inaccurate to use.","C) Studies failed to properly compare death against LWOP and made weak assumptions about offenders' actual perception of their execution risk.","D) Studies were funded by advocacy groups and therefore biased."],ans:'C',exp:"Nagin's core methodological critiques: (1) studies didn't properly estimate marginal deterrence vs. LWOP; (2) weak assumptions about whether potential offenders actually perceive their execution risk. These flaws make existing evidence unreliable."},
+  ],
+  'Retribution':[
+    {q:"Blecker distinguishes retribution from revenge primarily on which grounds?",opts:["A) Revenge is legal; retribution is extralegal.","B) Retribution must be proportional and directed only at the guilty; revenge can be unlimited and misdirected.","C) Revenge targets future crimes; retribution targets past ones.","D) Blecker considers revenge and retribution morally equivalent."],ans:'B',exp:"Blecker: revenge can be disproportionate, emotional, and misdirected. Retribution must be limited, proportional, and directed only at the actually guilty person."},
+    {q:"Is retribution best described as an empirical or a normative concept — and why?",opts:["A) Empirical — we can measure whether punishment levels are correct by studying recidivism rates.","B) Normative — it answers a moral question about what punishment is deserved, which cannot be settled by running a regression.","C) Both empirical and normative in equal parts.","D) Neither — retribution is purely a procedural legal doctrine."],ans:'B',exp:"Retribution is normative (moral). You cannot run a statistical test to determine the correct amount of desert. Deterrence is empirical in principle — it asks whether punishment changes behavior, which is at least theoretically measurable."},
+  ],
+  'IAC / Strickland':[
+    {q:"Under Strickland, does a bad strategic decision that led to a worse outcome automatically satisfy Prong 1 (deficient performance)?",opts:["A) Yes — any decision that worsened the outcome is automatically deficient.","B) No — a decision that looks bad in hindsight may still have been a reasonable strategy at the time, and courts are highly deferential to strategic choices.","C) Yes — the client's outcome is always the deciding factor for Prong 1.","D) No — Prong 1 is only about whether the lawyer physically attended all hearings."],ans:'B',exp:"Strickland is deferential to strategic decisions. A decision that looks bad afterward is not automatically 'deficient' — courts ask whether it was a reasonable professional judgment at the time. This deference makes Prong 1 difficult to satisfy."},
+    {q:"Failure to investigate a capital defendant's history of childhood abuse before the penalty phase is most closely associated with which IAC issue?",opts:["A) Failure to cross-examine key prosecution witnesses.","B) Conflict of interest with the prosecution.","C) Failure to investigate and present mitigation evidence.","D) Filing a defective notice of appeal."],ans:'C',exp:"Mitigation investigation is one of the most common IAC issues in capital cases, specifically raised by Giles and Langfitt/Nolas. Failing to uncover abuse, brain damage, or trauma before the penalty phase can constitute deficient performance under Strickland."},
+  ],
+  'Jean Giles':[
+    {q:"Jean Giles described federal death-row conditions. Approximately how many hours per day are federal death-row prisoners locked in their cells?",opts:["A) 8 hours","B) 12 hours","C) 18 hours","D) 23 hours"],ans:'D',exp:"Giles described federal death-row conditions as approximately 23 hours per day locked down, with very limited recreation and outside access."},
+    {q:"Giles's concept that 'explanation ≠ excuse' means which of the following?",opts:["A) Mitigation evidence is irrelevant unless it completely excuses the crime.","B) Presenting a defendant's traumatic background explains factors affecting culpability without claiming the murder was acceptable.","C) The defense should never explain the defendant's background to the jury.","D) Excuses are legally binding; explanations are not."],ans:'B',exp:"Explanation ≠ excuse: mitigation tells the jury WHY the defendant's culpability or circumstances weigh against death — childhood abuse, brain damage, trauma — without saying the murder was justified."},
+  ],
+  'Jeremy Mull':[
+    {q:"Mull's 'death-qualified jury' means which of the following?",opts:["A) A jury composed entirely of people who strongly favor the death penalty.","B) A jury from which all death-penalty opponents have been removed.","C) A jury whose members are each willing to consider death as one possible lawful punishment.","D) A jury that has pre-decided on death before hearing penalty-phase evidence."],ans:'C',exp:"Death-qualified means jurors must be WILLING TO CONSIDER death — not eager for it. Someone who says they could NEVER vote for death under any circumstances is excluded, but ordinary ambivalence does not disqualify a juror."},
+    {q:"In the Oberhansley case, what primarily caused Mull to shift from seeking death to pursuing LWOP?",opts:["A) The victim's family requested a plea deal.","B) The Indiana Supreme Court ordered the change.","C) Severe mental illness was a major factor, and jurors indicated after trial that they would not have voted for death because of Oberhansley's mental condition.","D) An intellectual disability finding barred death under the Indiana statute."],ans:'C',exp:"Mull changed course primarily because of Oberhansley's severe mental illness. Post-trial jurors told Mull they would not have voted for death given the defendant's mental condition. Illustrates: aggravator + horrific crime ≠ automatic death."},
+  ],
+};
+
+// ── STATE ──────────────────────────────────────────────────
+const SA = {};
+
+function updateProgress(){
+  const c=Object.keys(SA).length;
+  const p=(c/40)*100;
+  document.getElementById('answeredCount').textContent=c;
+  document.getElementById('progressFill').style.width=p+'%';
+  document.getElementById('sbCount').textContent=c+' / 40';
+  document.getElementById('sbFill').style.width=p+'%';
+}
+
+function selectOpt(el){
+  const q=el.dataset.q,v=el.dataset.val;
+  document.querySelectorAll(`.option[data-q="${q}"]`).forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  SA[q]=v; updateProgress();
+}
+
+function selectTF(el){
+  const q=el.dataset.q,v=el.dataset.val;
+  document.querySelectorAll(`.tf-btn[data-q="${q}"]`).forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  SA[q]=v; updateProgress();
+}
+
+function showAnswerSheet(){
+  const grid=document.getElementById('answerGrid');
+  grid.innerHTML='';
+  for(let i=1;i<=40;i++){
+    const v=SA[i]||null;
+    const row=document.createElement('div');
+    row.className='answer-row';
+    row.innerHTML=`<div class="ar-num">${i}.</div><div class="ar-val ${v?'filled':'empty'}">${v||'—'}</div>`;
+    grid.appendChild(row);
+  }
+  const s=document.getElementById('answerSheet');
+  s.classList.add('visible');
+  s.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function gradeQuiz(){
+  let score=0;
+  const topicErr={};
+  for(let i=1;i<=40;i++){
+    const correct=ANSWER_KEY[i].ans;
+    const given=SA[i]||'No answer';
+    const topic=ANSWER_KEY[i].topic;
+    if(given===correct) score++;
+    else topicErr[topic]=(topicErr[topic]||0)+1;
+  }
+  const pct=Math.round((score/40)*100);
+  const grade=pct>=90?'A':pct>=80?'B':pct>=70?'C':pct>=60?'D':'F';
+  const sc=pct>=80?'#10b981':pct>=70?'#f59e0b':'#ef4444';
+
+  const sortedTopics=Object.entries(topicErr).sort((a,b)=>b[1]-a[1]);
+  const weakTopics=sortedTopics.slice(0,3).map(t=>t[0]);
+
+  let html=`
+    <div class="section-header"><div class="label">Results</div><div class="line"></div></div>
+    <div class="score-card">
+      <div class="score-label">Your Score</div>
+      <div class="score-number" style="color:${sc}">${score}<span style="font-size:36px;color:var(--muted)">/40</span></div>
+      <div class="score-pct">${pct}% &nbsp;·&nbsp; Grade: <strong style="color:${sc}">${grade}</strong></div>
+      <div class="score-bar-wrap"><div class="score-bar-fill" style="width:0%;background:linear-gradient(90deg,${sc},${sc})" id="scoreBarFill"></div></div>
+      <div class="score-grade" style="color:${sc}">${pct>=90?'🏆 Outstanding exam prep!':pct>=80?'✅ Strong performance — a few gaps to close.':pct>=70?'📖 Solid — targeted review will get you there.':'⚠️ Needs focused work — use the review below.'}</div>
+    </div>
+    <div class="section-header"><div class="label">Question-by-Question Feedback</div><div class="line"></div></div>
+  `;
+
+  for(let i=1;i<=40;i++){
+    const correct=ANSWER_KEY[i].ans;
+    const given=SA[i]||'No answer';
+    const isCorrect=given===correct;
+    const e=EXP[i];
+    const wn=(!isCorrect&&e.wrong&&e.wrong[given])?e.wrong[given]:null;
+    html+=`<div class="feedback-item ${isCorrect?'correct':'incorrect'}">
+      <div class="feedback-header">
+        <div class="feedback-badge ${isCorrect?'badge-correct':'badge-incorrect'}">${isCorrect?'✓ Correct':'✗ Incorrect'}</div>
+        <div class="feedback-q">Q${i} &nbsp;·&nbsp; ${ANSWER_KEY[i].topic}</div>
+      </div>
+      <div class="feedback-body">${isCorrect
+        ?`<strong>You answered ${given} — correct!</strong> ${e.why}`
+        :`<strong>You answered ${given}; correct answer is ${correct}.</strong><div class="why">💡 <strong>Why ${correct} is correct:</strong> ${e.why}${wn?`<br><br>❌ <strong>Why your answer (${given}) is wrong:</strong> ${wn}`:''}</div>`}
+      </div></div>`;
+  }
+
+  html+=`<div class="section-header" style="margin-top:48px"><div class="label">Your 3 Weakest Topics</div><div class="line"></div></div>`;
+  weakTopics.forEach((t,idx)=>{
+    const r=TOPIC_REVIEWS[t]||{title:t,bullets:[]};
+    html+=`<div class="weak-card"><h3>${idx+1}. ${r.title}</h3><ul>${r.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></div>`;
+  });
+
+  html+=`<div class="section-header" style="margin-top:48px"><div class="label">10 Targeted Practice Questions</div><div class="line"></div><div class="section-tag">Weak-Area Focus</div></div>
+  <p style="color:var(--muted);font-size:14px;margin-bottom:20px;">Focused on your weakest areas: <strong style="color:var(--text)">${weakTopics.join(', ')}</strong>.</p>`;
+
+  let pool=[];
+  weakTopics.forEach(t=>{if(BONUS[t])pool=pool.concat(BONUS[t].map(bq=>({...bq,topic:t})))});
+  if(pool.length<10){Object.entries(BONUS).forEach(([t,qs])=>{if(!weakTopics.includes(t))pool=pool.concat(qs.map(bq=>({...bq,topic:t})))});}
+  pool.slice(0,10).forEach((bq,idx)=>{
+    html+=`<div class="bonus-q-card">
+      <div class="q-meta"><div class="q-num">B${idx+1}</div><div class="q-type type-mc">${bq.topic}</div></div>
+      <div class="q-text">${bq.q}</div>
+      <div class="options">${bq.opts.map(o=>`<div class="option" style="cursor:default"><div class="option-letter">${o[0]}</div>${o.slice(3)}</div>`).join('')}</div>
+      <div style="margin-top:14px;padding:12px 16px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:8px;font-size:13.5px;color:var(--muted);">
+        <strong style="color:#34d399">Answer: ${bq.ans}</strong> — ${bq.exp}
+      </div></div>`;
+  });
+
+  const r=document.getElementById('results');
+  r.innerHTML=html; r.classList.add('visible');
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(()=>{const b=document.getElementById('scoreBarFill');if(b){b.style.transition='width 1.2s ease';b.style.width=pct+'%';}},300);
+  document.getElementById('btnGrade').disabled=true;
+  document.getElementById('btnGrade').textContent='Graded ✓';
+}
+</script>
+</body>
+</html>
